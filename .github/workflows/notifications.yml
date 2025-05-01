@@ -1,0 +1,65 @@
+name: Notifications
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  notifications:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.19.1'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Send email notification
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.SMTP_SERVER }}
+          server_port: ${{ secrets.SMTP_PORT }}
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: 'GitHub Actions Notification'
+          body: 'The workflow has completed successfully.'
+          to: ${{ secrets.EMAIL_TO }}
+          from: ${{ secrets.EMAIL_FROM }}
+
+      - name: Send Slack notification
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+          channel: ${{ secrets.SLACK_CHANNEL }}
+          username: 'GitHub Actions'
+          icon_emoji: ':github:'
+          url: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: Send Discord notification
+        uses: Ilshidur/action-discord@master
+        with:
+          args: 'The workflow has completed successfully.'
+          webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
+          webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
+          avatar: 'https://github.com/actions.png'
+          username: 'GitHub Actions'
+          color: '0x00ff00'
+          title: 'GitHub Actions Notification'
+          description: 'The workflow has completed successfully.'
+          footer: 'GitHub Actions'
+          footer_icon: 'https://github.com/actions.png'
+          timestamp: true 

@@ -1,0 +1,16 @@
+{
+  "name": "The Polymath's Path",
+  "short_name": "Polymath's Path",
+  "description": "A comprehensive guide to becoming a modern Renaissance person",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+} 

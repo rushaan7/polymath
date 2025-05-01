@@ -1,0 +1,12 @@
+* text=auto eol=lf
+
+*.{js,jsx,ts,tsx,json,yml,yaml} text eol=lf
+*.{css,scss} text eol=lf
+*.{html,htm} text eol=lf
+*.{md,markdown} text eol=lf
+
+*.{png,jpg,jpeg,gif,ico,svg} binary
+*.{woff,woff2,ttf,eot} binary
+*.{pdf,doc,docx,xls,xlsx,ppt,pptx} binary
+*.{zip,tar,gz,rar,7z} binary
+*.{mp3,mp4,webm,ogg} binary 

@@ -1,0 +1,178 @@
+name: Dependencies
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  dependencies:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.19.1'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Check for outdated dependencies
+        run: npm outdated
+
+      - name: Update dependencies
+        run: npm update
+
+      - name: Check for security vulnerabilities
+        run: npm audit
+
+      - name: Fix security vulnerabilities
+        run: npm audit fix
+
+      - name: Check for unused dependencies
+        run: npm prune
+
+      - name: Check for duplicate dependencies
+        run: npm dedupe
+
+      - name: Check for circular dependencies
+        run: npm ls --all
+
+      - name: Check for missing dependencies
+        run: npm install --package-lock-only
+
+      - name: Check for invalid dependencies
+        run: npm doctor
+
+      - name: Check for deprecated dependencies
+        run: npm deprecate
+
+      - name: Check for peer dependencies
+        run: npm ls --peer
+
+      - name: Check for optional dependencies
+        run: npm ls --optional
+
+      - name: Check for dev dependencies
+        run: npm ls --dev
+
+      - name: Check for production dependencies
+        run: npm ls --prod
+
+      - name: Check for global dependencies
+        run: npm ls --global
+
+      - name: Check for local dependencies
+        run: npm ls --local
+
+      - name: Check for bundled dependencies
+        run: npm ls --bundled
+
+      - name: Check for extraneous dependencies
+        run: npm ls --extraneous
+
+      - name: Check for missing peer dependencies
+        run: npm ls --missing
+
+      - name: Check for invalid peer dependencies
+        run: npm ls --invalid
+
+      - name: Check for duplicate peer dependencies
+        run: npm ls --duplicate
+
+      - name: Check for circular peer dependencies
+        run: npm ls --circular
+
+      - name: Check for missing optional dependencies
+        run: npm ls --optional-missing
+
+      - name: Check for invalid optional dependencies
+        run: npm ls --optional-invalid
+
+      - name: Check for duplicate optional dependencies
+        run: npm ls --optional-duplicate
+
+      - name: Check for circular optional dependencies
+        run: npm ls --optional-circular
+
+      - name: Check for missing dev dependencies
+        run: npm ls --dev-missing
+
+      - name: Check for invalid dev dependencies
+        run: npm ls --dev-invalid
+
+      - name: Check for duplicate dev dependencies
+        run: npm ls --dev-duplicate
+
+      - name: Check for circular dev dependencies
+        run: npm ls --dev-circular
+
+      - name: Check for missing production dependencies
+        run: npm ls --prod-missing
+
+      - name: Check for invalid production dependencies
+        run: npm ls --prod-invalid
+
+      - name: Check for duplicate production dependencies
+        run: npm ls --prod-duplicate
+
+      - name: Check for circular production dependencies
+        run: npm ls --prod-circular
+
+      - name: Check for missing global dependencies
+        run: npm ls --global-missing
+
+      - name: Check for invalid global dependencies
+        run: npm ls --global-invalid
+
+      - name: Check for duplicate global dependencies
+        run: npm ls --global-duplicate
+
+      - name: Check for circular global dependencies
+        run: npm ls --global-circular
+
+      - name: Check for missing local dependencies
+        run: npm ls --local-missing
+
+      - name: Check for invalid local dependencies
+        run: npm ls --local-invalid
+
+      - name: Check for duplicate local dependencies
+        run: npm ls --local-duplicate
+
+      - name: Check for circular local dependencies
+        run: npm ls --local-circular
+
+      - name: Check for missing bundled dependencies
+        run: npm ls --bundled-missing
+
+      - name: Check for invalid bundled dependencies
+        run: npm ls --bundled-invalid
+
+      - name: Check for duplicate bundled dependencies
+        run: npm ls --bundled-duplicate
+
+      - name: Check for circular bundled dependencies
+        run: npm ls --bundled-circular
+
+      - name: Check for missing extraneous dependencies
+        run: npm ls --extraneous-missing
+
+      - name: Check for invalid extraneous dependencies
+        run: npm ls --extraneous-invalid
+
+      - name: Check for duplicate extraneous dependencies
+        run: npm ls --extraneous-duplicate
+
+      - name: Check for circular extraneous dependencies
+        run: npm ls --extraneous-circular 
