@@ -27,25 +27,13 @@ const nextConfig = {
       ...config.resolve.alias,
       '@': process.cwd(),
     };
-    
-    // Handle canvas module
-    config.module.rules.push({
-      test: /\.node$/,
-      use: 'node-loader',
-    });
 
-    // Add PDF.js worker configuration
-    config.resolve.alias.canvas = false;
-    config.resolve.alias.encoding = false;
-
-    // Copy PDF.js worker to public directory
-    config.module.rules.push({
-      test: /pdf\.worker\.min\.js$/,
-      type: 'asset/resource',
-      generator: {
-        filename: 'static/[name][ext]',
-      },
-    });
+    // Handle PDF.js dependencies
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      canvas: false,
+      encoding: false,
+    };
 
     return config;
   },
