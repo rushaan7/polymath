@@ -15,12 +15,40 @@ interface RazorpayResponse {
   razorpay_signature: string;
 }
 
+interface RazorpayOptions {
+  key: string;
+  amount: number;
+  currency: string;
+  name: string;
+  description: string;
+  handler: (response: RazorpayResponse) => void;
+  prefill: {
+    name: string;
+    email: string;
+  };
+  theme: {
+    color: string;
+  };
+  modal: {
+    ondismiss: () => void;
+  };
+}
+
+declare global {
+  interface Window {
+    Razorpay: new (options: RazorpayOptions) => {
+      open: () => void;
+    };
+  }
+}
+
 export default function Purchase() {
   const [showPreview, setShowPreview] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [coupon, setCoupon] = useState('');
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
   const [discount, setDiscount] = useState(0);
+  const [isRazorpayLoaded, setIsRazorpayLoaded] = useState(false);
   const { hasPurchased, setPurchase } = usePurchaseStore();
 
   useEffect(() => {
@@ -30,6 +58,7 @@ export default function Purchase() {
     script.async = true;
     script.onload = () => {
       console.log('Razorpay script loaded');
+      setIsRazorpayLoaded(true);
     };
     script.onerror = (error) => {
       console.error('Error loading Razorpay script:', error);
@@ -64,13 +93,13 @@ export default function Purchase() {
   };
 
   const handlePurchase = () => {
-    if (typeof window === 'undefined' || !window.Razorpay) {
-      setError('Payment system not available. Please try again later.');
+    if (!isRazorpayLoaded) {
+      setError('Payment system is still loading. Please try again in a moment.');
       return;
     }
 
-    if (!config.razorpay.keyId) {
-      setError('Payment configuration error. Please contact support.');
+    if (!config.razorpay.isConfigured) {
+      setError('Payment system is not configured. Please contact support.');
       return;
     }
 
@@ -200,11 +229,11 @@ export default function Purchase() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={handlePurchase}
                 className="btn-primary w-full"
-                onClick={hasPurchased ? () => setShowPreview(true) : handlePurchase}
-                disabled={!!error}
+                disabled={!isRazorpayLoaded || !config.razorpay.isConfigured}
               >
-                {hasPurchased ? 'Read The Polymath\'s Path' : discount === 100 ? 'Get Free Access' : 'Purchase Now'}
+                Purchase Now ({bookConfig.currency} {finalPrice})
               </motion.button>
             </div>
 
@@ -330,9 +359,9 @@ export default function Purchase() {
         </motion.div>
 
         {showPreview && (
-          <ProtectedPDFPreview 
-            onCloseAction={() => setShowPreview(false)} 
-            isPreview={!hasPurchased}
+          <ProtectedPDFPreview
+            pdfUrl={config.pdfUrl}
+            maxPreviewPages={29}
           />
         )}
       </div>

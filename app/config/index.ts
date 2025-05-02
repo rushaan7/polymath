@@ -1,7 +1,8 @@
 export const config = {
   razorpay: {
-    keyId: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-    keySecret: process.env.RAZORPAY_KEY_SECRET,
+    keyId: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || '',
+    keySecret: process.env.RAZORPAY_KEY_SECRET || '',
+    isConfigured: Boolean(process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET),
   },
   book: {
     title: "The Polymath's Path",
