@@ -6,11 +6,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'images.unsplash.com',
-      },
-      {
-        protocol: 'http',
-        hostname: 'localhost',
+        hostname: '**',
       },
     ],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
@@ -20,7 +16,6 @@ const nextConfig = {
   },
   experimental: {
     optimizeCss: true,
-    optimizePackageImports: ['@heroicons/react', '@radix-ui/react-icons'],
   },
   webpack: (config) => {
     config.resolve.alias = {
@@ -32,19 +27,15 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: '/books/:path*',
+        source: '/:path*',
         headers: [
           {
-            key: 'Content-Type',
-            value: 'application/pdf',
+            key: 'Cross-Origin-Embedder-Policy',
+            value: 'require-corp',
           },
           {
-            key: 'Content-Disposition',
-            value: 'inline',
-          },
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
+            key: 'Cross-Origin-Opener-Policy',
+            value: 'same-origin',
           },
         ],
       },
