@@ -20,49 +20,22 @@ export default function PDFViewer({
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="fixed inset-0 bg-slate-900/95 backdrop-blur-sm z-50">
-      <AnimatePresence>
-        {showControls && (
-          <motion.div
-            className="absolute top-0 left-0 right-0 p-4 bg-slate-800/50 backdrop-blur-sm border-b border-slate-700"
-            exit={{ opacity: 0, y: -20 }}
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <div className="max-w-7xl mx-auto flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <span className="text-white font-medium bg-slate-700/50 px-4 py-2 rounded-lg">
-                  {isPreview ? 'Preview Mode' : 'Full Book'}
-                </span>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <button
-                  className="p-2 text-white hover:text-red-400 transition-colors"
-                  onClick={onCloseAction}
-                >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <div
-        ref={containerRef}
-        className="absolute inset-0 flex items-center justify-center p-4"
-        style={{ marginTop: showControls ? '4rem' : '0' }}
-      >
-        <div className="relative w-full max-w-6xl h-[calc(100vh-8rem)] bg-slate-800 shadow-2xl rounded-lg overflow-hidden">
-          <iframe
-            src={`${pdfUrl}#toolbar=0&navpanes=0`}
-            className="w-full h-full"
-            title="PDF Viewer"
-          />
-        </div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="relative w-full h-full max-w-6xl max-h-[90vh] bg-white rounded-lg shadow-xl">
+        <button
+          onClick={onCloseAction}
+          className="absolute top-4 right-4 z-10 p-2 text-gray-500 hover:text-gray-700 bg-white rounded-full shadow-md"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        
+        <iframe
+          src={`${pdfUrl}#page=1${isPreview ? `&page=${maxPreviewPages}` : ''}`}
+          className="w-full h-full rounded-lg"
+          title="PDF Viewer"
+        />
       </div>
     </div>
   );
