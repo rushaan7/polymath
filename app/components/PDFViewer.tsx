@@ -7,7 +7,10 @@ import 'react-pdf/dist/esm/Page/TextLayer.css';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Set up the worker using the web version
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.js',
+  import.meta.url,
+).toString();
 
 interface PDFViewerProps {
   pdfUrl: string;
