@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
@@ -35,7 +35,7 @@ export default function PDFViewer({
     setNumPages(numPages);
   };
 
-  const handlePrevious = () => {
+  const handlePrevious = useCallback(() => {
     if (currentPage > 1 && !isFlipping) {
       setIsFlipping(true);
       setDirection(-1);
@@ -43,9 +43,9 @@ export default function PDFViewer({
       // Reset scroll position when changing pages
       if (contentRef.current) contentRef.current.scrollTop = 0;
     }
-  };
+  }, [currentPage, isFlipping]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     const maxPage = isPreview ? maxPreviewPages : (numPages || 0);
     if (currentPage < maxPage - 1 && !isFlipping) {
       setIsFlipping(true);
@@ -54,7 +54,7 @@ export default function PDFViewer({
       // Reset scroll position when changing pages
       if (contentRef.current) contentRef.current.scrollTop = 0;
     }
-  };
+  }, [currentPage, isFlipping, isPreview, maxPreviewPages, numPages]);
 
   const handleZoomIn = () => {
     setScale(prev => Math.min(prev + 0.1, 2));
@@ -79,7 +79,7 @@ export default function PDFViewer({
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentPage, numPages, isFlipping, onCloseAction]);
+  }, [currentPage, handleNext, handlePrevious, isFlipping, numPages, onCloseAction]);
 
   const pageVariants = {
     initial: (direction: number) => ({
@@ -114,17 +114,17 @@ export default function PDFViewer({
       <AnimatePresence>
         {showControls && (
           <motion.div
+            className="absolute top-0 left-0 right-0 p-4 bg-slate-800/50 backdrop-blur-sm border-b border-slate-700"
+            exit={{ opacity: 0, y: -20 }}
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="absolute top-0 left-0 right-0 p-4 bg-slate-800/50 backdrop-blur-sm border-b border-slate-700"
           >
             <div className="max-w-7xl mx-auto flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <button
-                  onClick={handlePrevious}
-                  disabled={currentPage <= 1 || isFlipping}
                   className="px-4 py-2 bg-purple-500 text-white rounded-lg disabled:opacity-50 hover:bg-purple-600 transition-colors flex items-center gap-2"
+                  disabled={currentPage <= 1 || isFlipping}
+                  onClick={handlePrevious}
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -136,9 +136,9 @@ export default function PDFViewer({
                   {isPreview && <span className="text-purple-400 ml-2">(Preview)</span>}
                 </span>
                 <button
-                  onClick={handleNext}
-                  disabled={currentPage >= (isPreview ? maxPreviewPages : (numPages || 0)) - 1 || isFlipping}
                   className="px-4 py-2 bg-purple-500 text-white rounded-lg disabled:opacity-50 hover:bg-purple-600 transition-colors flex items-center gap-2"
+                  disabled={currentPage >= (isPreview ? maxPreviewPages : (numPages || 0)) - 1 || isFlipping}
+                  onClick={handleNext}
                 >
                   Next
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -150,8 +150,8 @@ export default function PDFViewer({
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2 bg-slate-700/50 px-3 py-1 rounded-lg">
                   <button
-                    onClick={handleZoomOut}
                     className="p-1 text-white hover:text-purple-400 transition-colors"
+                    onClick={handleZoomOut}
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
@@ -161,8 +161,8 @@ export default function PDFViewer({
                     {Math.round(scale * 100)}%
                   </span>
                   <button
-                    onClick={handleZoomIn}
                     className="p-1 text-white hover:text-purple-400 transition-colors"
+                    onClick={handleZoomIn}
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -171,8 +171,8 @@ export default function PDFViewer({
                 </div>
 
                 <button
-                  onClick={onCloseAction}
                   className="p-2 text-white hover:text-red-400 transition-colors"
+                  onClick={onCloseAction}
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -206,14 +206,14 @@ export default function PDFViewer({
           >
             <AnimatePresence mode="wait" custom={direction}>
               <motion.div
-                key={currentPage}
-                custom={direction}
-                variants={pageVariants}
-                initial="initial"
                 animate="animate"
-                exit="exit"
                 className="absolute inset-0 flex"
+                custom={direction}
+                exit="exit"
+                initial="initial"
+                key={currentPage}
                 onAnimationComplete={() => setIsFlipping(false)}
+                variants={pageVariants}
               >
                 <div 
                   ref={contentRef}
@@ -222,20 +222,20 @@ export default function PDFViewer({
                   <div className="flex w-full">
                     <div className="w-1/2 p-4 border-r border-slate-700">
                       <Page
-                        pageNumber={currentPage}
-                        scale={scale}
                         className="!w-full"
-                        renderTextLayer={false}
+                        pageNumber={currentPage}
                         renderAnnotationLayer={false}
+                        renderTextLayer={false}
+                        scale={scale}
                       />
                     </div>
                     <div className="w-1/2 p-4">
                       <Page
-                        pageNumber={currentPage + 1}
-                        scale={scale}
                         className="!w-full"
-                        renderTextLayer={false}
+                        pageNumber={currentPage + 1}
                         renderAnnotationLayer={false}
+                        renderTextLayer={false}
+                        scale={scale}
                       />
                     </div>
                   </div>

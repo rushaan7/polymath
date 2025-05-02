@@ -1,5 +1,6 @@
 import { cn } from '../lib/utils';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 interface TestimonialCardProps {
   author: string;
@@ -30,9 +31,11 @@ export default function TestimonialCard({
       <div className="mb-4 flex items-center gap-4">
         <div className="h-12 w-12 overflow-hidden rounded-full bg-primary/20">
           {avatar && (
-            <img
+            <Image
               src={avatar}
               alt={author}
+              width={48}
+              height={48}
               className="h-full w-full object-cover"
             />
           )}

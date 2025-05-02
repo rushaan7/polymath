@@ -198,11 +198,10 @@ const config: Config = {
         'gradient-dark': 'linear-gradient(to right, #0f172a, #1e293b)',
         'gradient-light': 'linear-gradient(to right, #f8fafc, #e2e8f0)',
         'gradient-glass': 'linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0))',
-        'gradient-glass-dark': 'linear-gradient(135deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0))',
+        'gradient-glass-dark': 'linear-gradient(135deg, rgba(15, 23, 42, 0.1), rgba(15, 23, 42, 0))',
         'gradient-glass-purple': 'linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0))',
         'gradient-glass-indigo': 'linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(99, 102, 241, 0))',
         'gradient-glass-slate': 'linear-gradient(135deg, rgba(100, 116, 139, 0.1), rgba(100, 116, 139, 0))',
-        'gradient-glass-dark': 'linear-gradient(135deg, rgba(15, 23, 42, 0.1), rgba(15, 23, 42, 0))',
         'gradient-glass-light': 'linear-gradient(135deg, rgba(248, 250, 252, 0.1), rgba(248, 250, 252, 0))',
       },
       backdropFilter: {

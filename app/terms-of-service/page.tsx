@@ -79,7 +79,7 @@ export default function TermsOfService() {
             For any questions regarding these Terms of Service, please contact us at:
           </p>
           <p className="text-purple-400 mt-2">
-            support@thepolymathspath.com
+            r.kwalker01@gmail.com
           </p>
         </section>
       </div>

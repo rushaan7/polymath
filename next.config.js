@@ -27,6 +27,13 @@ const nextConfig = {
       ...config.resolve.alias,
       '@': process.cwd(),
     };
+    
+    // Handle canvas module
+    config.module.rules.push({
+      test: /\.node$/,
+      use: 'node-loader',
+    });
+
     return config;
   },
   async headers() {
@@ -50,6 +57,10 @@ const nextConfig = {
       },
     ];
   },
+  output: 'standalone',
+  distDir: '.next',
+  poweredByHeader: false,
+  compress: true,
 };
 
 module.exports = nextConfig; 

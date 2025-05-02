@@ -50,4 +50,7 @@ export default function ErrorState({
           Try Again
         </motion.button>
       )}
+    </motion.div>
+  );
+}
  

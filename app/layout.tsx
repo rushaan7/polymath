@@ -5,6 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://thepolymathspath.com'),
   title: "The Polymath's Path | Become a Modern Renaissance Person",
   description: "A comprehensive guide to becoming a modern Renaissance person. Learn multiple disciplines, develop diverse skills, and master the art of learning.",
   keywords: ["polymath", "learning", "education", "personal development", "renaissance", "self-improvement", "knowledge", "skills"],

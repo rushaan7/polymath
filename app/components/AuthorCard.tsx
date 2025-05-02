@@ -1,5 +1,6 @@
 import { cn } from '../lib/utils';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 interface AuthorCardProps {
   name: string;
@@ -34,9 +35,11 @@ export default function AuthorCard({
       <div className="mb-4 flex items-center gap-4">
         <div className="h-16 w-16 overflow-hidden rounded-full bg-primary/20">
           {avatar && (
-            <img
+            <Image
               src={avatar}
               alt={name}
+              width={64}
+              height={64}
               className="h-full w-full object-cover"
             />
           )}

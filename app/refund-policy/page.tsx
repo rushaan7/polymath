@@ -34,7 +34,7 @@ export default function RefundPolicy() {
             To request a refund:
           </p>
           <ol className="list-decimal pl-6 space-y-2 text-gray-300">
-            <li>Contact our support team at support@thepolymathspath.com within 7 days of purchase</li>
+            <li>Contact our support team at r.kwalker01@gmail.com within 7 days of purchase</li>
             <li>Provide your order details and reason for the refund request</li>
             <li>Our team will review your request within 3-5 business days</li>
             <li>If approved, the refund will be processed through the original payment method</li>
@@ -74,7 +74,7 @@ export default function RefundPolicy() {
             For any questions regarding our refund policy, please contact us at:
           </p>
           <p className="text-purple-400 mt-2">
-            support@thepolymathspath.com
+            r.kwalker01@gmail.com
           </p>
         </section>
       </div>

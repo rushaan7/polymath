@@ -1,6 +1,5 @@
 'use client';
 
-import { cn } from '../lib/utils';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -20,19 +19,19 @@ export default function About() {
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
+            whileInView={{ opacity: 1, x: 0 }}
             className="relative aspect-[4/3] w-full overflow-hidden rounded-lg group"
           >
             <div className="relative h-full w-full">
               <Image
-                src="/images/about.jpg"
                 alt="About the Book"
                 fill
-                className="object-cover transition-all duration-500 group-hover:scale-110"
-                sizes="(max-width: 768px) 100vw, 50vw"
                 priority
+                sizes="(max-width: 768px) 100vw, 50vw"
+                src="/images/about.jpg"
+                className="object-cover transition-all duration-500 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-100 group-hover:opacity-0 transition-opacity duration-500" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -40,9 +39,9 @@ export default function About() {
           </motion.div>
           <motion.div
             initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
+            whileInView={{ opacity: 1, x: 0 }}
             className="flex flex-col justify-center"
           >
             <h2 className="mb-6 text-4xl font-bold text-white">About the Book</h2>

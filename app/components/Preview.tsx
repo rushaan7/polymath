@@ -1,6 +1,5 @@
 'use client';
 
-import { cn } from '../lib/utils';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import ChapterPreview from './ChapterPreview';
@@ -20,11 +19,11 @@ export default function Preview() {
     <section className="py-20 bg-slate-900">
       <div className="container mx-auto px-4">
         <motion.div
+          className="mb-16 text-center"
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="mb-16 text-center"
+          whileInView={{ opacity: 1, y: 0 }}
         >
           <h2 className="mb-4 text-4xl font-bold text-white">Explore the Chapters</h2>
           <p className="text-xl text-gray-300">
@@ -37,36 +36,36 @@ export default function Preview() {
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
+              whileInView={{ opacity: 1, y: 0 }}
             >
               <ChapterPreview
-                title={chapter.title}
+                className="h-full"
                 description={chapter.description}
                 imageUrl={chapter.image}
-                className="h-full"
+                title={chapter.title}
               />
             </motion.div>
           ))}
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
           className="mt-16 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          whileInView={{ opacity: 1, y: 0 }}
         >
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            aria-label="Get Started"
             className="btn-primary"
             onClick={() => {
               const purchaseSection = document.getElementById('purchase');
               purchaseSection?.scrollIntoView({ behavior: 'smooth' });
             }}
-            aria-label="Get Started"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             Get Started
           </motion.button>

@@ -273,6 +273,62 @@ export default function Purchase() {
           </motion.div>
         </div>
 
+        {/* Physical Book Purchase Options */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="max-w-4xl mx-auto mt-16 text-center"
+        >
+          <h3 className="text-2xl font-bold text-white mb-6">Get the Physical Copy</h3>
+          <div className="grid md:grid-cols-2 gap-8">
+            <motion.a
+              href="https://notionpress.com/in/read/the-polymath-s-path"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex flex-col items-center justify-center p-6 bg-slate-800/50 rounded-2xl backdrop-blur-sm hover:bg-slate-800/70 transition-colors"
+            >
+              <div className="w-32 h-16 mb-4 relative">
+                <Image
+                  src="/images/notionpress.jpg"
+                  alt="Notion Press Logo"
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </div>
+              <h4 className="text-xl font-semibold text-white mb-2">Notion Press</h4>
+              <p className="text-gray-300 mb-4">Get the paperback edition from Notion Press</p>
+              <span className="text-purple-400 font-medium">₹220</span>
+            </motion.a>
+
+            <motion.a
+              href="https://a.co/d/4qiDVKj"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex flex-col items-center justify-center p-6 bg-slate-800/50 rounded-2xl backdrop-blur-sm hover:bg-slate-800/70 transition-colors"
+            >
+              <div className="w-32 h-16 mb-4 relative">
+                <Image
+                  src="/images/amazon.jpg"
+                  alt="Amazon Logo"
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </div>
+              <h4 className="text-xl font-semibold text-white mb-2">Amazon</h4>
+              <p className="text-gray-300 mb-4">Purchase from Amazon for fast delivery</p>
+              <span className="text-yellow-400 font-medium">$2.99</span>
+            </motion.a>
+          </div>
+        </motion.div>
+
         {showPreview && (
           <ProtectedPDFPreview 
             onCloseAction={() => setShowPreview(false)} 
