@@ -34,6 +34,19 @@ const nextConfig = {
       use: 'node-loader',
     });
 
+    // Add PDF.js worker configuration
+    config.resolve.alias.canvas = false;
+    config.resolve.alias.encoding = false;
+
+    // Copy PDF.js worker to public directory
+    config.module.rules.push({
+      test: /pdf\.worker\.min\.js$/,
+      type: 'asset/resource',
+      generator: {
+        filename: 'static/[name][ext]',
+      },
+    });
+
     return config;
   },
   async headers() {
