@@ -1,8 +1,5 @@
 'use client';
 
-import { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-
 interface PDFViewerProps {
   pdfUrl: string;
   onCloseAction: () => void;
@@ -12,13 +9,10 @@ interface PDFViewerProps {
 
 export default function PDFViewer({ 
   pdfUrl, 
-  onCloseAction, 
-  isPreview = false, 
-  maxPreviewPages = 29 
+  onCloseAction,
+  isPreview = false,
+  maxPreviewPages = 29
 }: PDFViewerProps) {
-  const [showControls, setShowControls] = useState(true);
-  const containerRef = useRef<HTMLDivElement>(null);
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="relative w-full h-full max-w-6xl max-h-[90vh] bg-white rounded-lg shadow-xl">
