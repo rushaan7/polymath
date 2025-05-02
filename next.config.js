@@ -27,27 +27,6 @@ const nextConfig = {
       ...config.resolve.alias,
       '@': process.cwd(),
     };
-
-    // Handle PDF.js dependencies
-    config.resolve.fallback = {
-      ...config.resolve.fallback,
-      canvas: false,
-      encoding: false,
-      fs: false,
-      path: false,
-      stream: false,
-      util: false,
-    };
-
-    // Exclude PDF.js worker from the bundle
-    config.module.rules.push({
-      test: /pdf\.worker\.(min\.)?js/,
-      type: 'asset/resource',
-      generator: {
-        filename: 'static/chunks/[name].[hash][ext]',
-      },
-    });
-
     return config;
   },
   async headers() {
